@@ -1,0 +1,364 @@
+/* static/css/style.css */
+:root {
+    --primary-color: #2563eb;
+    --text-color: #1f2937;
+    --bg-color: #ffffff;
+    --accent-bg: #f3f4f6;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+nav {
+    background-color: var(--bg-color);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 1rem 0;
+}
+
+.nav-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-links a {
+    margin-left: 2rem;
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+.nav-links a:hover {
+    color: var(--primary-color);
+}
+
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.hero {
+    aspect-ratio: 16/5;
+    text-align: center;
+    max-width: 1200px;
+    padding: 4rem 0;
+    background-image: url('../images/hero-bg.jpg');  /* Add this line */
+    background-size: cover;                          /* Add this line */
+    background-position: 50% 30%;                     /* Add this line */
+    border-radius: 0.5rem;
+    margin-bottom: 2rem;
+    /* Make text more readable on the image */
+    color: white;                                    /* Add this line */
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);       /* Add this line */
+}
+
+.project-grid {
+    /*display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); */
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.project-card {
+    background: var(--bg-color);
+    border-radius: 0.5rem;
+    
+    height: 275px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    /*puts image on the left and other content on the right*/
+    display: flex;
+    align-items: start;
+}
+
+.project-card img {
+    width: 300px;
+    height: 100%;
+    object-fit: cover;
+    /*make image non-shrinkable*/
+    border-radius: 0.5rem 0 0 0.5rem;
+    flex-shrink: 0;
+}
+
+/*a new .project-content wrapper for the right side content*/
+.project-content {
+    flex: 1;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;  /* Aligns children to the left */
+    flex-wrap: wrap;
+}
+
+
+.project-card h3 {
+    margin: 1rem;
+    /*flex-direction: column;*/
+    align-self: flex-start;  /* Ensures title aligns left */
+    width: 100%;  /* Ensures description takes full width */
+}
+
+.project-card p {
+    margin: 1rem;
+    color: #666;
+    text-align: left;
+    width: 100%;  /* Ensures description takes full width */
+}
+
+.technologies {
+    padding: 0;
+    display: flex;
+    gap: 0.5rem;
+    flex-direction: row;
+     /* align-self: flex-start;  Ensures tech tags align left */
+}
+
+.tech-tag {
+    background-color: var(--accent-bg);
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.875rem;
+    flex-direction: row;
+}
+
+.project-links {
+    padding: 0;
+    display: flex;
+    gap: 1rem;
+    align-self: flex-start;  /* Ensures links align left */
+}
+
+.project-links a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+footer {
+    text-align: center;
+    padding: 2rem;
+    background-color: var(--accent-bg);
+    margin-top: 4rem;
+}
+
+@media (max-width: 768px) {
+    .project-card {
+        flex-direction: column;
+    }
+    
+    .project-card img {
+        width: 100%;
+        border-radius: 0.5rem 0.5rem 0 0;
+    }
+    
+    .nav-content {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .nav-links a {
+        margin: 0 1rem;
+    }
+}
+
+/* Add this to your static/css/style.css */
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.modal-content {
+    position: relative;
+    background-color: white;
+    margin: 2rem auto;
+    padding: 1rem;
+    width: 90%;
+    max-width: 800px;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.close-modal {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #666;
+}
+
+.close-modal:hover {
+    color: black;
+}
+
+/* Carousel styles */
+.carousel {
+    position: relative;
+    margin: 1rem 0;
+}
+
+.carousel-inner {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+}
+
+.carousel-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.carousel-item.active {
+    opacity: 1;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    object-fit: contain;
+    background-color: #f3f4f6;
+}
+
+.carousel-caption {
+    text-align: center;
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    /*position: absolute;*/
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 1rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-control:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.carousel-prev {
+    left: 1rem;
+}
+
+.carousel-next {
+    right: 1rem;
+}
+
+/* Make project cards clickable */
+.project-card {
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+}
+
+/* About Me */
+
+.about {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0rem;
+}
+
+.about h1 {
+    margin-bottom: 2rem;
+    color: var(--text-color);
+}
+
+.about-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.about-item {
+    background: var(--bg-color);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.aboutitem2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.aboutitem-header {
+    font-size: 1.25rem;
+    color: var(--primary-color);
+    margin: 0;
+}
+
+
+.school {
+    color: var(--text-color);
+    margin: 0.5rem 0 1rem 0;
+    font-size: 1.1rem;
+}
+
+.aboutmeitems {
+    margin: 0;
+    padding-left: 1.5rem;
+}
+
+.aboutmeitems li {
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+    .experience-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .experience {
+        padding: 1rem;
+    }
+}

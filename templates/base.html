@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Portfolio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <a href="{{ url_for('home') }}" class="logo">Lucas Leong</a>
+            <div class="nav-links">
+                <a href="{{ url_for('home') }}">Home</a>
+                <a href="{{ url_for('experience') }}">Experience</a>
+                <a href="{{ url_for('projects_page') }}">Projects</a>
+                <a href="{{ url_for('contact') }}">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Lucas Leong. All rights reserved.</p>
+    </footer>
+
+<!-- Modal HTML structure -->
+<div class="modal" id="projectModal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2 id="modalTitle"></h2>
+        <div class="carousel">
+            <div class="carousel-inner" id="carouselInner">
+                <!-- Carousel items will be inserted here by JavaScript -->
+            </div>
+            <button class="carousel-control carousel-prev" onclick="prevSlide()">&lt;</button>
+            <button class="carousel-control carousel-next" onclick="nextSlide()">&gt;</button>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript for modal and carousel functionality -->
+<script>
+const modal = document.getElementById('projectModal');
+const modalTitle = document.getElementById('modalTitle');
+const carouselInner = document.getElementById('carouselInner');
+let currentSlide = 0;
+let slides = [];
+
+// Add click handlers to all project cards
+document.addEventListener('DOMContentLoaded', () => {
+    const projectCards = document.querySelectorAll('.project-card');
+    projectCards.forEach((card, index) => {
+        card.addEventListener('click', () => openModal(index));
+    });
+});
+
+// Close modal when clicking the X or outside the modal
+document.querySelector('.close-modal').addEventListener('click', closeModal);
+window.addEventListener('click', (event) => {
+    if (event.target === modal) {
+        closeModal();
+    }
+});
+
+function openModal(projectIndex) {
+    const project = projectsData[projectIndex];
+    modalTitle.textContent = project.title;
+    
+    // Create carousel items
+    carouselInner.innerHTML = '';
+    slides = project.project_images;
+    
+    slides.forEach((slide, index) => {
+        const item = document.createElement('div');
+        item.className = `carousel-item ${index === 0 ? 'active' : ''}`;
+        item.innerHTML = `
+            <img src="${slide.url}" alt="${project.title} - Image ${index + 1}">
+            <div class="carousel-caption">${slide.caption}</div>
+        `;
+        carouselInner.appendChild(item);
+    });
+    
+    currentSlide = 0;
+    modal.style.display = 'block';
+}
+
+function closeModal() {
+    modal.style.display = 'none';
+}
+
+function showSlide(index) {
+    const items = document.querySelectorAll('.carousel-item');
+    items.forEach(item => item.classList.remove('active'));
+    
+    currentSlide = (index + slides.length) % slides.length;
+    items[currentSlide].classList.add('active');
+}
+
+function nextSlide() {
+    showSlide(currentSlide + 1);
+}
+
+function prevSlide() {
+    showSlide(currentSlide - 1);
+}
+
+// Add keyboard navigation
+document.addEventListener('keydown', (event) => {
+    if (modal.style.display === 'block') {
+        if (event.key === 'ArrowLeft') {
+            prevSlide();
+        } else if (event.key === 'ArrowRight') {
+            nextSlide();
+        } else if (event.key === 'Escape') {
+            closeModal();
+        }
+    }
+});
+
+// Project data needs to be available to JavaScript
+const projectsData = {{ projects|tojson|safe if projects else '[]' }};
+</script>
+    
+</body>
+</html>

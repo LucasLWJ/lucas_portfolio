@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="experience">
+    <h1>Experience</h1>
+    
+    <div class="experience-container">
+        {% for exp in experiences %}
+        <div class="experience-item">
+            <div class="experience-header">
+                <h3 class="company-name">{{ exp.company }}</h3>
+                <span class="date">{{ exp.date }}</span>
+            </div>
+            <h4 class="position">{{ exp.position }}</h4>
+            <ul class="responsibilities">
+                {% for responsibility in exp.responsibilities %}
+                    <li>{{ responsibility }}</li>
+                {% endfor %}
+            </ul>
+            <div class="technologies">
+                {% for tech in exp.technologies %}
+                <span class="tech-tag">{{ tech }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<style>
+    .experience {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+
+    .experience h1 {
+        margin-bottom: 2rem;
+        color: var(--text-color);
+    }
+
+    .experience-container {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .experience-item {
+        background: var(--bg-color);
+        border-radius: 0.5rem;
+        padding: 1.5rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .experience-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .experience-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+    }
+
+    .company-name {
+        font-size: 1.25rem;
+        color: var(--primary-color);
+        margin: 0;
+    }
+
+    .date {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+    }
+
+    .position {
+        color: var(--text-color);
+        margin: 0.5rem 0 1rem 0;
+        font-size: 1.1rem;
+    }
+
+    .responsibilities {
+        margin: 0;
+        padding-left: 1.5rem;
+    }
+
+    .responsibilities li {
+        margin-bottom: 0.5rem;
+        color: var(--text-secondary);
+        line-height: 1.5;
+    }
+
+    @media (max-width: 768px) {
+        .experience-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .experience {
+            padding: 1rem;
+        }
+    }
+</style>
+{% endblock %}
